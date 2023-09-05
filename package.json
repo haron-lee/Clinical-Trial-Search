@@ -61,7 +61,7 @@
     "*.{js,css,md}": "prettier --write",
     "*.{ts,tsx}": [
       "prettier --write",
-      "eslint --fix"
+      "eslint --cache --fix"
     ]
   }
 }
