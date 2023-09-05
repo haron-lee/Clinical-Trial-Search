@@ -1,7 +1,14 @@
+import GlobalStyle from 'GlobalStyle';
 import React from 'react';
+import { Outlet } from 'react-router';
 
 function App() {
-  return <div className='App'>하이</div>;
+  return (
+    <>
+      <GlobalStyle />
+      <Outlet />
+    </>
+  );
 }
 
 export default App;
