@@ -1,0 +1,3 @@
+{
+  "*.{json,html,css,scss,js,jsx,ts,tsx}": "prettier --cache --write"
+}
