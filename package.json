@@ -57,11 +57,18 @@
     "prettier": "^3.0.3"
   },
   "lint-staged": {
+<<<<<<< HEAD
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+=======
     "*.js": "eslint --cache --fix",
     "*.{js,css,md}": "prettier --write",
     "*.{ts,tsx}": [
       "prettier --write",
-      "eslint --fix"
+      "eslint --cache --fix"
+>>>>>>> 3505529 (Chore: lint-staged 설정)
     ]
   }
+
 }
