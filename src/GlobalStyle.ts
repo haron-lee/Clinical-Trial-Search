@@ -23,6 +23,7 @@ const GlobalStyle = createGlobalStyle`
   :root {
     /* 컬러 변수 */
     --bg: #ECF2FF;
+    --gray-100: #f8f8f8;
     --gray-200: #DEDEDE;
     --gray-400: #D2D2D2;
     --gray-600: #B4B4B4;
