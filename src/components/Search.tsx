@@ -1,35 +1,21 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { styled } from 'styled-components';
-import { debounce } from 'lodash';
 import Input from './Input';
 import Button from './Button';
 import SelectList from 'components/Select/SelectList';
 import { getKeyword } from 'api/search';
 import { Disease } from 'types';
 import { useInputKeywordContext } from 'context/useInputKeywordContext';
+import useCachedData from 'hooks/useCachedData';
 
 const Form: React.FC = () => {
-  const [disease, setDisease] = useState<Disease[]>(() => []);
   const { inputKeyword } = useInputKeywordContext();
   const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  const fetcher = useCallback(() => getKeyword(inputKeyword), [inputKeyword]);
+  const disease: Disease[] = useCachedData(inputKeyword, fetcher, 1000) || [];
+
   const visibleDisease = disease.slice(0, 10);
-
-  const fetchData = useMemo(() => {
-    return debounce(async (query: string) => {
-      const keywords = await getKeyword(query);
-      console.info('calling api');
-      setDisease(() => keywords);
-    }, 1000);
-  }, []);
-
-  useEffect(() => {
-    if (inputKeyword.length === 0) {
-      setDisease([]);
-      return;
-    }
-
-    fetchData(inputKeyword);
-  }, [inputKeyword, fetchData]);
 
   const navigateGoogleSearch = (url: string) => {
     window.open(url, '_blank', 'noopener, noreferrer');
@@ -59,10 +45,10 @@ const Form: React.FC = () => {
           }
           break;
         default:
-          break;
       }
     }
   };
+
   return (
     <>
       <StyledForm>
