@@ -5,7 +5,7 @@
   "singleQuote": true,
   "proseWrap": "preserve",
   "semi": true,
-  "printWidth": 120,
+  "printWidth": 100,
   "endOfLine": "lf",
   "useTabs": false,
   "tabWidth": 2,
