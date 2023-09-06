@@ -1,11 +1,16 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { debounce } from 'lodash';
 
 function useCachedData(key: string, fetcher: () => Promise<any>, delay = 1000) {
   const [data, setData] = useState(null);
 
-  const debouncedFetch = useCallback(
-    debounce(async (key) => {
+  useEffect(() => {
+    if (!key) {
+      setData(null);
+      return;
+    }
+
+    const debouncedFetch = debounce(async () => {
       let result;
 
       const cachedItem = sessionStorage.getItem(key);
@@ -29,20 +34,12 @@ function useCachedData(key: string, fetcher: () => Promise<any>, delay = 1000) {
       }
 
       setData(result);
-    }, delay),
-    [fetcher],
-  );
+    }, delay);
 
-  useEffect(() => {
-    if (!key) {
-      setData(null);
-      return;
-    }
-
-    debouncedFetch(key);
+    debouncedFetch();
 
     return () => debouncedFetch.cancel();
-  }, [key, debouncedFetch]);
+  }, [key, fetcher, delay]);
 
   return data;
 }
