@@ -6,7 +6,7 @@ type ButtonProps = {
 };
 
 const Button: React.FC<ButtonProps> = ({ children }) => {
-  return <StyledButton>{children}</StyledButton>;
+  return <StyledButton type='button'>{children}</StyledButton>;
 };
 
 const StyledButton = styled.button`
