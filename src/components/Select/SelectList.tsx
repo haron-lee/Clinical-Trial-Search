@@ -5,16 +5,18 @@ import { Disease } from 'types';
 
 type SelectProps = {
   disease: Disease[];
+  selectedIndex: number;
 };
 
-const SelectList: React.FC<SelectProps> = ({ disease }) => {
+const SelectList: React.FC<SelectProps> = ({ disease, selectedIndex }) => {
   return (
     <StyledUl>
       <li>
         <StyledP>추천 검색어</StyledP>
       </li>
-      {disease.slice(0, 10).map((disease) => {
-        return <SelectItem key={disease.sickCd} disease={disease} />;
+      {disease.slice(0, 10).map((disease, index) => {
+        const isSelected = index === selectedIndex;
+        return <SelectItem key={disease.sickCd} disease={disease} $isSelected={isSelected} />;
       })}
     </StyledUl>
   );
