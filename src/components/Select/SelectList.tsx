@@ -1,14 +1,21 @@
 import React from 'react';
 import SelectItem from './SelectItem';
 import { styled } from 'styled-components';
+import { Disease } from 'types';
 
-const SelectList: React.FC = () => {
+type SelectProps = {
+  disease: Disease[];
+};
+
+const SelectList: React.FC<SelectProps> = ({ disease }) => {
   return (
     <StyledUl>
       <li>
         <StyledP>추천 검색어</StyledP>
       </li>
-      <SelectItem>뿅</SelectItem>
+      {disease.slice(0, 10).map((disease) => {
+        return <SelectItem key={disease.sickCd} disease={disease} />;
+      })}
     </StyledUl>
   );
 };
