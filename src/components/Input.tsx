@@ -3,7 +3,11 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { styled } from 'styled-components';
 import { useInputKeywordContext } from 'context/useInputKeywordContext';
 
-const Input: React.FC = () => {
+type InputProps = {
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement> | undefined;
+};
+
+const Input: React.FC<InputProps> = ({ onKeyDown }) => {
   const { inputKeyword, setInputKeyword } = useInputKeywordContext();
 
   const getInputKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,6 +22,7 @@ const Input: React.FC = () => {
         onChange={getInputKeyword}
         autoFocus
         placeholder='검색어를 입력하세요'
+        onKeyDown={onKeyDown}
       />
       <AiOutlineSearch size='34' color='black' />
     </StyledLabel>
