@@ -1,40 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import { styled } from 'styled-components';
-import { debounce } from 'lodash';
-import Form from 'components/Form';
-import SelectList from 'components/Select/SelectList';
-import { getKeyword } from 'api/search';
-import { Disease } from 'types';
-import { useInputKeywordContext } from 'context/useInputKeywordContext';
+import Search from 'components/Search';
 
 const Home: React.FC = () => {
-  const [disease, setDisease] = useState<Disease[]>(() => []);
-  const { inputKeyword } = useInputKeywordContext();
-
-  const fetchData = useMemo(() => {
-    return debounce(async (query: string) => {
-      const keywords = await getKeyword(query);
-      console.info('calling api');
-      setDisease(() => keywords);
-    }, 1000);
-  }, []);
-
-  useEffect(() => {
-    if (inputKeyword.length === 0) {
-      setDisease([]);
-      return;
-    }
-
-    fetchData(inputKeyword);
-  }, [inputKeyword, fetchData]);
-
   return (
     <Wrapper>
       <h1>
         국내 모든 임상시험 검색하고 <br /> 온라인으로 참여하기
       </h1>
-      <Form />
-      <SelectList disease={disease} />
+      <Search />
     </Wrapper>
   );
 };
