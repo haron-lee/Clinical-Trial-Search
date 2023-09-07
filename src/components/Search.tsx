@@ -7,13 +7,14 @@ import { getKeyword } from 'api/search';
 import { Disease } from 'types';
 import { useInputKeywordContext } from 'context/useInputKeywordContext';
 import useCachedData from 'hooks/useCachedData';
+import { DELAY_TIME } from 'utils/constants';
 
 const Search: React.FC = () => {
   const { inputKeyword } = useInputKeywordContext();
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const fetcher = useCallback(() => getKeyword(inputKeyword), [inputKeyword]);
-  const disease: Disease[] = useCachedData(inputKeyword, fetcher, 1000) || [];
+  const disease: Disease[] = useCachedData(inputKeyword, fetcher, DELAY_TIME) || [];
 
   const navigateGoogleSearch = (url: string) => {
     window.open(url, '_blank', 'noopener, noreferrer');
