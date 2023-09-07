@@ -41,6 +41,32 @@ function useCachedData(key: string, fetcher: () => Promise<any>, delay = 1000) {
     return () => debouncedFetch.cancel();
   }, [key, fetcher, delay]);
 
+  useEffect(() => {
+    const cleanupExpiredItems = () => {
+      for (let i = 0; i < sessionStorage.length; i++) {
+        const key = sessionStorage.key(i);
+
+        if (key) {
+          const cachedItemStr = sessionStorage.getItem(key);
+
+          if (cachedItemStr) {
+            const cachedItemObj = JSON.parse(cachedItemStr);
+
+            if (Date.now() - cachedItemObj.timestamp > 300000) {
+              sessionStorage.removeItem(key);
+            }
+          }
+        }
+      }
+    };
+
+    cleanupExpiredItems();
+
+    const intervalId = setInterval(cleanupExpiredItems, delay);
+
+    return () => clearInterval(intervalId);
+  }, [delay]);
+
   return data;
 }
 
