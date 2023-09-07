@@ -17,7 +17,7 @@ const SelectList: React.FC<SelectProps> = ({ disease, selectedIndex }) => {
       {disease.length === 0 ? (
         <NoKeyword>검색어 없음</NoKeyword>
       ) : (
-        disease.slice(0, 10).map((diseaseItem, index) => {
+        disease.map((diseaseItem, index) => {
           const isSelected = index === selectedIndex;
           return (
             <SelectItem key={diseaseItem.sickCd} disease={diseaseItem} $isSelected={isSelected} />

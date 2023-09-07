@@ -15,8 +15,6 @@ const Search: React.FC = () => {
   const fetcher = useCallback(() => getKeyword(inputKeyword), [inputKeyword]);
   const disease: Disease[] = useCachedData(inputKeyword, fetcher, 1000) || [];
 
-  const visibleDisease = disease.slice(0, 10);
-
   const navigateGoogleSearch = (url: string) => {
     window.open(url, '_blank', 'noopener, noreferrer');
   };
@@ -25,17 +23,13 @@ const Search: React.FC = () => {
     if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown' && event.key !== 'Enter') return;
     if (event.nativeEvent.isComposing) return;
 
-    if (visibleDisease.length > 0) {
+    if (disease.length > 0) {
       switch (event.key) {
         case 'ArrowUp':
-          setSelectedIndex((prevIndex) =>
-            prevIndex <= 0 ? visibleDisease.length - 1 : prevIndex - 1,
-          );
+          setSelectedIndex((prevIndex) => (prevIndex <= 0 ? disease.length - 1 : prevIndex - 1));
           break;
         case 'ArrowDown':
-          setSelectedIndex((prevIndex) =>
-            prevIndex >= visibleDisease.length - 1 ? 0 : prevIndex + 1,
-          );
+          setSelectedIndex((prevIndex) => (prevIndex >= disease.length - 1 ? 0 : prevIndex + 1));
           break;
         case 'Enter':
           if (disease[selectedIndex]) {
