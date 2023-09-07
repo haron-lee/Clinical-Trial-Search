@@ -14,10 +14,16 @@ const SelectList: React.FC<SelectProps> = ({ disease, selectedIndex }) => {
       <li>
         <StyledP>추천 검색어</StyledP>
       </li>
-      {disease.slice(0, 10).map((disease, index) => {
-        const isSelected = index === selectedIndex;
-        return <SelectItem key={disease.sickCd} disease={disease} $isSelected={isSelected} />;
-      })}
+      {disease.length === 0 ? (
+        <NoKeyword>검색어 없음</NoKeyword>
+      ) : (
+        disease.slice(0, 10).map((diseaseItem, index) => {
+          const isSelected = index === selectedIndex;
+          return (
+            <SelectItem key={diseaseItem.sickCd} disease={diseaseItem} $isSelected={isSelected} />
+          );
+        })
+      )}
     </StyledUl>
   );
 };
@@ -33,6 +39,10 @@ const StyledP = styled.p`
   margin-bottom: 15px;
   font-size: 16px;
   color: var(--gray-600);
+`;
+
+const NoKeyword = styled.p`
+  color: var(--gray-800);
 `;
 
 export default SelectList;
