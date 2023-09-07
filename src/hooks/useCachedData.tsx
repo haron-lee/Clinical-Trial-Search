@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { debounce } from 'lodash';
+import { EXPIRE_TIME } from 'utils/constants';
 
-function useCachedData(key: string, fetcher: () => Promise<any>, delay = 1000) {
+function useCachedData(key: string, fetcher: () => Promise<any>, delay: number) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -15,7 +16,7 @@ function useCachedData(key: string, fetcher: () => Promise<any>, delay = 1000) {
 
       const cachedItem = sessionStorage.getItem(key);
 
-      if (cachedItem && Date.now() - JSON.parse(cachedItem).timestamp <= 300000) {
+      if (cachedItem && Date.now() - JSON.parse(cachedItem).timestamp <= EXPIRE_TIME) {
         result = JSON.parse(cachedItem).data;
         console.info('calling caching data');
       } else {
@@ -52,7 +53,7 @@ function useCachedData(key: string, fetcher: () => Promise<any>, delay = 1000) {
           if (cachedItemStr) {
             const cachedItemObj = JSON.parse(cachedItemStr);
 
-            if (Date.now() - cachedItemObj.timestamp > 300000) {
+            if (Date.now() - cachedItemObj.timestamp > EXPIRE_TIME) {
               sessionStorage.removeItem(key);
             }
           }
