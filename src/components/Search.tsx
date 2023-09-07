@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { styled } from 'styled-components';
 import Input from './Input';
 import Button from './Button';
@@ -12,6 +12,10 @@ import { DELAY_TIME } from 'utils/constants';
 const Search: React.FC = () => {
   const { inputKeyword } = useInputKeywordContext();
   const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  useEffect(() => {
+    setSelectedIndex(-1);
+  }, [inputKeyword]);
 
   const fetcher = useCallback(() => getKeyword(inputKeyword), [inputKeyword]);
   const disease: Disease[] = useCachedData(inputKeyword, fetcher, DELAY_TIME) || [];
