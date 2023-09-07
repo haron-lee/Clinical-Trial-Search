@@ -8,7 +8,7 @@ import { Disease } from 'types';
 import { useInputKeywordContext } from 'context/useInputKeywordContext';
 import useCachedData from 'hooks/useCachedData';
 
-const Form: React.FC = () => {
+const Search: React.FC = () => {
   const { inputKeyword } = useInputKeywordContext();
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
@@ -51,18 +51,18 @@ const Form: React.FC = () => {
 
   return (
     <>
-      <StyledForm>
+      <StyledSearchLayout>
         <Input onKeyDown={moveKeyword} />
         <Button>검색</Button>
-      </StyledForm>
+      </StyledSearchLayout>
       <SelectList disease={disease} selectedIndex={selectedIndex} />
     </>
   );
 };
 
-const StyledForm = styled.div`
+const StyledSearchLayout = styled.div`
   display: flex;
   flex: auto;
 `;
 
-export default Form;
+export default Search;
